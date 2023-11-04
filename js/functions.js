@@ -1,3 +1,4 @@
+module5-task2
 const toHours = (num) => num/60;
 
 const timeJobDay = (startDay, endDay, starttime, endJob) =>{
