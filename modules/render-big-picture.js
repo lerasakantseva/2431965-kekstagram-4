@@ -1,15 +1,9 @@
 const bigPicture = document.querySelector('.big-picture');
-const removeButton = bigPicture.querySelector('.big-picture__cancel');
-
 const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
 const bigPictureLikesCount = bigPicture.querySelector('.likes-count');
-const bigPictureCommentsCount = bigPicture.querySelector('.comments-count');
 const bigPictureCommentsCountBlock = bigPicture.querySelector('.social__comment-count');
 const bigPictureSocialCaption = bigPicture.querySelector('.social-caption');
 const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
-
-const body = document.querySelector('body');
-const comment = document.querySelector('.social__comment');
 const commentList = document.querySelector('.social__comments');
 
 const renderComment = (commentInfo) => {
@@ -29,8 +23,6 @@ const renderComments = (commentsInfo) => {
   commentsInfo.forEach((commentInfo) => {
     fragment.append(renderComment(commentInfo));
   });
-
-  commentList.append(fragment);
 };
 
 const showBigPicture = () => {
@@ -61,8 +53,6 @@ const fillPictureDetails = (pictureInfo) => {
   renderComments(pictureInfo.comments);
 };
 
-const addEventListenerToPicture = (picturesInfo) => {
-  const pictures = document.querySelectorAll('.picture');
 
   for (const picture of pictures){
     picture.addEventListener('click', () => {
