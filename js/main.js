@@ -1,8 +1,8 @@
-import { getPhoto } from './create_photo';
-import { renderThumbnail } from '../modules/render-thumnail.js';
-import { addEventListenerToPicture } from '../modules/render-big-picture.js';
+import { renderPhotos } from '/photos-and-comments/render-photos.js';
+import { createUsersPhotos } from './create-photo.js';
+import { setupForm } from '/effect/form.js';
+import '/effect/effects.js';
 
-const pictures = getPhoto();
-renderThumbnail(getPhoto());
-renderThumbnail(pictures);
-addEventListenerToPicture(pictures);
+const data = createUsersPhotos();
+setupForm();
+renderPhotos(data);
