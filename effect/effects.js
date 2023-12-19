@@ -66,4 +66,13 @@ const resetEffects = () => {
   onUpdateEffect();
 };
 
-export {resetEffects};
+const initEffects = () => {
+  effects.addEventListener('change', onChangeEffect);
+  effectContainer.noUiSlider.on('update', onChangeValueEffect);
+
+  effectContainer.noUiSlider.on('update', () => {
+    effectValue.value = effectContainer.noUiSlider.get();
+  });
+};
+
+export {resetEffects, initEffects};

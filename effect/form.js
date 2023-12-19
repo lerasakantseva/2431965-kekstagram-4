@@ -1,4 +1,5 @@
 import {resetEffects} from './effects.js';
+import { resetSizing } from './size.js';
 
 const uploadInput = document.querySelector('#upload-file');
 const formEdit = document.querySelector('.img-upload__overlay');
@@ -27,6 +28,7 @@ const onUploadInputChange = () => {
 
   if (uploadInput.value.length > 0) {
     reader.addEventListener('load', () => {
+      resetSizing();
       const url = reader.result;
 
       img.src = url;
