@@ -13,6 +13,9 @@ let chosenEffect = DEFAULT_VALUE;
 
 const checkingDefault = () => chosenEffect === DEFAULT_VALUE;
 
+const hideSlider = () => effectLevel.classList.add('hidden');
+const showSlider = () => effectLevel.classList.remove('hidden');
+
 noUiSlider.create(effectContainer, {
   range: {
     min: DEFAULT_VALUE.min,
@@ -21,10 +24,6 @@ noUiSlider.create(effectContainer, {
   start: DEFAULT_VALUE.max,
   step: DEFAULT_VALUE.step,
   connect: 'lower'
-});
-
-effectContainer.noUiSlider.on('update', () => {
-  effectValue.value = effectContainer.noUiSlider.get();
 });
 
 const onUpdateEffect = () => {
@@ -38,18 +37,19 @@ const onUpdateEffect = () => {
   });
 
   if(checkingDefault()) {
-    effectLevel.classList.add('hidden');
+    hideSlider();
   } else {
-    effectLevel.classList.remove('hidden');
+    showSlider();
   }
 };
 
 const onChangeValueEffect = () => {
   const value = effectContainer.noUiSlider.get();
-  uploadPreviewImg.style.filter = checkingDefault() ?
-    DEFAULT_VALUE.style :
-    `${chosenEffect.style}(${value}${chosenEffect.unit})`;
   effectValue.value = value;
+  uploadPreviewImg.style.filter = checkingDefault()
+    ? DEFAULT_VALUE
+    : `${chosenEffect.style}(${value}${chosenEffect.unit})`;
+
 };
 
 const onChangeEffect = (evt) => {

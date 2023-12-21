@@ -1,41 +1,38 @@
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 const successMessage = document.querySelector('#success').content.querySelector('.success');
+let alertContainer;
 
-const closeModal = (alertContainer) => {
-  alertContainer.remove();
-  document.body.removeEventListener('keydown', closeModal);
+const onDocumentKeydown = (evt) => {
+  if (evt.key === 'Escape') {
+    alertContainer.remove();
+    document.body.removeEventListener('keydown', onDocumentKeydown);
+  }
 };
 
-const updatePage = (evt) => {
+const reloadPage = (evt) => {
   if (evt.key === 'Enter') {
     location.reload();
   }
 };
 
-function closeMessage (evt) {
-  if (evt.key === 'Escape') {
-    closeModal();
-  }
-}
-
 const showLoadError = (message) => {
-  const alertContainer = errorMessage.cloneNode(true);
-  const messageText = alertContainer.querySelector('.error__title');
-  const button = alertContainer.querySelector('button');
+  const loadErrorMessage = errorMessage.cloneNode(true);
+  const messageText = loadErrorMessage.querySelector('.error__title');
+  const button = loadErrorMessage.querySelector('button');
 
-  alertContainer.style = 'line-height: 40px';
+  loadErrorMessage.style = 'line-height: 40px';
 
   button.addEventListener('click', () => location.reload());
-  document.body.addEventListener('keydown', updatePage);
+  document.body.addEventListener('keydown', reloadPage);
 
   messageText.textContent = message;
 
-  document.body.append(alertContainer);
+  document.body.append(loadErrorMessage);
 };
 
 
 const showErrorAlarm = () => {
-  const alertContainer = errorMessage.cloneNode(true);
+  alertContainer = errorMessage.cloneNode(true);
   const button = alertContainer.querySelector('button');
 
   document.body.append(alertContainer);
@@ -43,18 +40,19 @@ const showErrorAlarm = () => {
   button.addEventListener('click', () => {
     alertContainer.remove();
   });
-  alertContainer.addEventListener('keydown', closeMessage);
 
+  alertContainer.addEventListener('keydown', onDocumentKeydown);
 };
 
 const showSuccessMessage = () => {
-  const alertContainer = successMessage.cloneNode(true);
+  alertContainer = successMessage.cloneNode(true);
   const button = alertContainer.querySelector('button');
 
   button.addEventListener('click', () => {
     alertContainer.remove();
   });
-  document.body.addEventListener('keydown', closeMessage);
+
+  document.body.addEventListener('keydown', onDocumentKeydown);
 
   document.body.append(alertContainer);
 };
