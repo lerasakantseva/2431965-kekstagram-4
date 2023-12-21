@@ -1,5 +1,7 @@
 import {resetEffects} from './effects.js';
 import { resetSizing } from './size.js';
+import { sendData } from '/js/fetch-api.js';
+import { showErrorAlarm, showSuccessMessage } from '/photos-and-comments/popup-window.js';
 
 const uploadInput = document.querySelector('#upload-file');
 const formEdit = document.querySelector('.img-upload__overlay');
@@ -51,7 +53,9 @@ const closeModal = () => {
   document.body.removeEventListener('keydown', onDocumentKeyDown);
   buttonClose.removeEventListener('click', onCloseButtonClick);
   pristine.reset();
+  form.reset();
   resetEffects();
+  resetSizing();
 };
 
 function onDocumentKeyDown (evt) {
@@ -76,7 +80,11 @@ const isUniqHashtags = (hashtags) => hashtags.length === new Set(hashtags).size;
 
 const validateHashtag = (string) => {
   const hashtags = string.trim().toLowerCase().split(' ');
-  return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
+  if (hashtag.length > 0) {
+    return hashtags.every(isValidateHashtag) && isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
+  }
+
+  return isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
 };
 
 const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
@@ -86,10 +94,14 @@ pristine.addValidator(comment, validateCommentLength, 'Комментарий с
 
 const onFormSubmit = (evt) => {
   const isValid = pristine.validate();
+  evt.preventDefault();
   if(isValid){
-    form.submit();
-  } else {
-    evt.preventDefault();
+    sendData(new FormData(evt.target))
+      .then(() => {
+        closeModal();
+        showSuccessMessage();
+      })
+      .catch(showErrorAlarm);
   }
 };
 
