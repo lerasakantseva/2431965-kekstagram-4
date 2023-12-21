@@ -10,7 +10,7 @@ const METHOD = {
   POPST: 'POST'
 };
 
-const TEXT_TO_EXPORT = {
+const TEXT_TO_EXPOR = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
@@ -28,8 +28,8 @@ const load = (route, errorText, method = METHOD.GET, body = null) =>
       throw new Error(errorText);
     });
 
-const getData = () => load(ROUTE.GET_DATA, TEXT_TO_EXPORT.GET_DATA);
+const getData = () => load(ROUTE.GET_DATA, TEXT_TO_EXPOR.GET_DATA);
 
-const sendData = (body) => load(ROUTE.SEND_DATA, TEXT_TO_EXPORT.SEND_DATA, METHOD.POPST, body);
+const sendData = (body) => load(ROUTE.SEND_DATA, TEXT_TO_EXPOR.SEND_DATA, METHOD.POPST, body);
 
 export {getData, sendData};
