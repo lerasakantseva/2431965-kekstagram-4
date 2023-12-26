@@ -8,14 +8,19 @@ const loaderButton = document.querySelector('.comments-loader');
 const commentCount = document.querySelector('.social__comment-count');
 let onLoaderButtonClick;
 
-const preparateComments = (min, max, comments) => {
+const preparateComments = (minValue, maxValue, comments) => {
+  if(maxValue >= comments.length) {
+    loaderButton.classList.add('hidden');
+  } else {
+    loaderButton.classList.remove('hidden');
+  }
 
-  comments.slice(min, max).forEach((comment) => {
+  comments.slice(minValue, maxValue).forEach((comment) => {
     const newComment = commentTemplate.cloneNode(true);
     const userPhoto = newComment.querySelector('img');
     const userMessage = newComment.querySelector('.social__text');
 
-    commentCount.textContent = `${Math.min(comments.length, max)} из ${comments.length} комментариев`;
+    commentCount.textContent = `${Math.min(comments.length, maxValue)} из ${comments.length} комментариев`;
     userPhoto.src = comment.avatar;
     userPhoto.alt = comment.name;
     userMessage.textContent = comment.message;
@@ -26,18 +31,18 @@ const preparateComments = (min, max, comments) => {
 
 const renderComments = (comments) => {
   commentsList.innerHTML = '';
-  let min = 0;
-  let max = 5;
+  let minValue = 0;
+  let maxValue = 5;
 
   onLoaderButtonClick = () => {
-    min = max;
-    max = max + 5;
+    minValue = maxValue;
+    maxValue = maxValue + 5;
 
-    preparateComments(min, max, comments);
+    preparateComments(minValue, maxValue, comments);
   };
 
   loaderButton.addEventListener('click', onLoaderButtonClick);
-  preparateComments(min, max, comments);
+  preparateComments(minValue, maxValue, comments);
 };
 
 const clearLoaderListener = () => {
