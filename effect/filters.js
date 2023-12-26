@@ -36,7 +36,7 @@ const filterPictures = (currentFilter, pictures) => {
 
 const onFilterFormClick = (evt, pictures) => {
 
-  if (!evt.target.classList.contains('img-filters__button' || evt.target.classList.contains('img-filters__button--active'))) {
+  if (!evt.target.classList.contains('img-filters__button') || evt.target.classList.contains('img-filters__button--active')) {
     return;
   }
 
@@ -47,8 +47,8 @@ const onFilterFormClick = (evt, pictures) => {
 
   clearOldPictures();
 
-  const filteredPictures = filterPictures(currentFilter, pictures);
-  renderPhotos(filteredPictures);
+  const filteredPhotos = filterPictures(currentFilter, pictures);
+  renderPhotos(filteredPhotos);
 };
 
 const initFilters = (pictures) => {

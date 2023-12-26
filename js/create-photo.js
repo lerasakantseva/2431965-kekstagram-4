@@ -1,24 +1,24 @@
 import { getRandomNumber, getRandomArrayItem } from './get-random.js';
 import { NAMES, COMMENTS, DESCRIPTIONS } from './constant.js';
 
-const uniqueId = [];
+const originalId = [];
 
-const getUniqueId = (min, max) => {
-  let currentId = getRandomNumber(min, max);
+const getUniqueId = (minValue, maxValue) => {
+  let currentId = getRandomNumber(minValue, maxValue);
 
-  if (uniqueId.length >= (max - min + 1)) {
+  if (originalId.length >= (maxValue - minValue + 1)) {
     return null;
   }
 
-  while (uniqueId.includes(currentId)) {
-    currentId = getRandomNumber(min, max);
+  while (originalId.includes(currentId)) {
+    currentId = getRandomNumber(minValue, maxValue);
   }
 
-  uniqueId.push(currentId);
+  originalId.push(currentId);
   return currentId;
 };
 
-const createComment = () => ({
+const makeComment = () => ({
   id: getRandomNumber(0, 1000),
   avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
   message: getRandomArrayItem(COMMENTS),
@@ -30,7 +30,7 @@ const createUserPhoto = () => ({
   url: `photos/${getRandomNumber(1, 25)}.jpg`,
   description: getRandomArrayItem(DESCRIPTIONS),
   likes: getRandomNumber(15, 200),
-  comments: Array.from({length: getRandomNumber(1, 20)}, createComment)
+  comments: Array.from({length: getRandomNumber(1, 20)}, makeComment)
 });
 
 const createUsersPhotos = () => Array.from({length: 25}, createUserPhoto);

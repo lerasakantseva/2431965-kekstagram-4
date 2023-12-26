@@ -1,15 +1,15 @@
 import { openBigPicture } from './open-picture.js';
 
 const pictures = document.querySelector('.pictures');
-const picturesFragment = document.createDocumentFragment();
+const photosFragment = document.createDocumentFragment();
 
-const newPicture = document.querySelector('#picture')
+const newPhoto = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 
 const renderPhotos = (photos) => {
   photos.forEach(({url, description, comments, likes}) => {
-    const photo = newPicture.cloneNode(true);
+    const photo = newPhoto.cloneNode(true);
     const image = photo.querySelector('.picture__img');
     const info = photo.querySelector('.picture__info');
     const like = info.querySelector('.picture__likes');
@@ -25,10 +25,10 @@ const renderPhotos = (photos) => {
       openBigPicture(url, description, comments, likes);
     });
 
-    picturesFragment.appendChild(photo);
+    photosFragment.appendChild(photo);
   });
 
-  pictures.appendChild(picturesFragment);
+  pictures.appendChild(photosFragment);
 };
 
 export {renderPhotos};
