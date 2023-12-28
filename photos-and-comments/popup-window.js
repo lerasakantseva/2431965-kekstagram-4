@@ -34,7 +34,7 @@ const showLoadError = (message) => {
 
   loadErrorMessage.style = 'line-height: 40px';
 
-  button.addEventListener('click', () => location.reload());
+  button.addEventListener('click', () => {location.reload(); document.body.removeEventListener('keydown', reloadPage);});
   document.body.addEventListener('keydown', reloadPage);
 
   messageText.textContent = message;
