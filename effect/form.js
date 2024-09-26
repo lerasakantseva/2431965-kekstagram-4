@@ -14,10 +14,10 @@ const img = document.querySelector('.img-upload__preview img');
 
 
 const PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
-const MAX_LENGTH_HASHTAGS = 5;
-const MAX_LENGTH_COMMENT = 140;
+const MAX_VALUE_HASHTAGS = 5;
+const MAX_VALUE_COMMENT = 140;
 
-const pristine = new Pristine(form, {
+const untouched = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent:'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-error'
@@ -52,7 +52,7 @@ const closeModal = () => {
   document.body.classList.remove('.modal-open');
   document.body.removeEventListener('keydown', onDocumentKeyDown);
   buttonClose.removeEventListener('click', onCloseButtonClick);
-  pristine.reset();
+  untouched.reset();
   form.reset();
   resetEffects();
   resetSizing();
@@ -74,7 +74,7 @@ function setInnerListeners() {
 
 }
 
-const isHashtagsLength = (hashtags) => hashtags.length <= MAX_LENGTH_HASHTAGS;
+const isHashtagsLength = (hashtags) => hashtags.length <= MAX_VALUE_HASHTAGS;
 const isValidateHashtag = (item) => PATTERN.test(item);
 const isUniqHashtags = (hashtags) => hashtags.length === new Set(hashtags).size;
 
@@ -87,13 +87,13 @@ const validateHashtag = (string) => {
   return isHashtagsLength(hashtags) && isUniqHashtags(hashtags);
 };
 
-const validateCommentLength = (string) => string.length <= MAX_LENGTH_COMMENT;
+const validateCommentLength = (string) => string.length <= MAX_VALUE_COMMENT;
 
-pristine.addValidator(hashtag, validateHashtag, 'Слишком много хэш-тегов');
-pristine.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
+untouched.addValidator(hashtag, validateHashtag, 'Слишком много хэш-тегов');
+untouched.addValidator(comment, validateCommentLength, 'Комментарий слишком длинный');
 
 const onFormSubmit = (evt) => {
-  const isValid = pristine.validate();
+  const isValid = untouched.validate();
   evt.preventDefault();
   if(isValid){
     sendData(new FormData(evt.target))
